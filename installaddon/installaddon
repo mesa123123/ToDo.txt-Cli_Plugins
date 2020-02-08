@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# xdg-open <URL> is best in linux
+# python -m webbrowser <URL> -n
+# if mac 'open' <URL> will do the trick
+
+
+#Usage Command etc.
+
+
+# First get the operating system - this will change which command opens the browser
+# the url is https://github.com/todotxt/todo.txt-cli/wiki/Todo.sh-Add-on-Directory
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
+#stole this off stackoverflow rejigging it would be helpful
+[[ -x $BROWSER ]] && exec "$BROWSER" "$URL"
+path=$(which xdg-open || which gnome-open) && exec "$path" "$URL"
+if open -Ra "safari" ; then
+  echo "VERIFIED: 'Safari' is installed, opening browser..."
+  open -a safari "$URL"
+else
+  ec
+
+
